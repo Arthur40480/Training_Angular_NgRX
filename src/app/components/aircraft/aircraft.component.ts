@@ -22,6 +22,12 @@ export class AircraftComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onActionEvent($event: any) {
+    if($event == "ALL_AIRCRAFTS") this.getAllAircrafts;
+    if($event == "ALL_AIRCRAFTS_DESIGNED") this.getDesignedAircrafts;
+    if($event == "ALL_AIRCRAFTS_DEVELOPED") this.getDevelopmentAircrafts;
+  }
+
   getAllAircrafts() {
     this.aircrafts$ = this.aircraftService.getAircrafts().pipe(
       map((data: Aircraft[]) => ({dataState: DataStateEnum.LOADING, data: data})),
