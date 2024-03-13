@@ -1,9 +1,15 @@
 <nav class="navbar navbar-expand-sm">
     <ul class="navbar navbar-nav">
         <li>
-            <button class="btn btn-outline-info m-2" (click)="getAllAircrafts()">Aircrafts</button>
-            <button class="btn btn-outline-info m-2" (click)="getDesignedAircrafts()">Design</button>
-            <button class="btn btn-outline-info m-2" (click)="getDevelopmentAircrafts()">Development</button>
+            <button class="btn btn-outline-info m-2" (click)="getAllAircrafts()">Tous les Avions</button>
+            <button class="btn btn-outline-info m-2" (click)="getDesignedAircrafts()">Avions en étude</button>
+            <button class="btn btn-outline-info m-2" (click)="getDevelopmentAircrafts()">Avions en construction</button>
+        </li>
+        <li>
+            <form (ngSubmit)="onSearch(value)">
+                <input type="text" name="search" [(ngModel)]="value">
+                <button type="submit">Search</button>
+            </form>
         </li>
     </ul>
 </nav>

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AircraftService } from 'src/app/services/aircraft.service';
 import { Aircraft } from 'src/app/model/aircraft.model';
-import { Observable, catchError, startWith, map } from 'rxjs';
+import { Observable, catchError, startWith, map, filter } from 'rxjs';
 import { AppDataState } from 'src/app/state/aircraft.state';
 import { DataStateEnum } from 'src/app/state/aircraft.state';
 import { of } from 'rxjs';
+import { Laboratory } from 'src/app/laboratory';
+import { ActionEvent, AircraftsActionsTypes } from 'src/app/actions/aircraft.actions';
 
 @Component({
   selector: 'app-aircraft',
@@ -16,16 +18,35 @@ export class AircraftComponent implements OnInit {
   // aircraftsList : Aircraft[] | null = null; OPTION 1 -> tableau d'avions
   aircrafts$: Observable<AppDataState<Aircraft[]>> | null = null;
   readonly dataStateEnum = DataStateEnum;
+  laboratory: Laboratory;
 
-  constructor(private aircraftService: AircraftService) { }
-
-  ngOnInit(): void {
+  constructor(private aircraftService: AircraftService) {
+    this.laboratory = new Laboratory();
   }
 
-  onActionEvent($event: any) {
-    if($event == "ALL_AIRCRAFTS") this.getAllAircrafts();
-    if($event == "ALL_AIRCRAFTS_DESIGNED") this.getDesignedAircrafts();
-    if($event == "ALL_AIRCRAFTS_DEVELOPED") this.getDevelopmentAircrafts();
+  ngOnInit(): void {
+    this.laboratory.tests();
+  }
+
+  onActionEvent($actionEvent: ActionEvent) {
+    switch($actionEvent.type) {
+      case AircraftsActionsTypes.GET_ALL_AIRCRAFTS :
+        this.getAllAircrafts();
+        break;
+
+      case AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS : 
+        this.getDesignedAircrafts();
+        break;
+
+      case AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS :
+        this.getDevelopmentAircrafts();
+        break;
+
+      case AircraftsActionsTypes.GET_SEARCH_AIRCRAFTS : 
+      this.searchAircraftsByKeyword($actionEvent.payload)
+        break;
+      
+    }
   }
 
   getAllAircrafts() {
@@ -34,11 +55,6 @@ export class AircraftComponent implements OnInit {
       startWith({dataState: DataStateEnum.LOADED}),
       catchError(err => of({dataState: DataStateEnum.ERROR, errorMessage: err.message}))
     );
-    // this.aircraftService.getAircrafts().subscribe({
-    //   next: (data) => this.aircraftsList = data,
-    //   error: (err) => this.error = err.message,
-    //   complete: () => this.error = null
-    // })
   }
 
   getDesignedAircrafts() {
@@ -47,11 +63,6 @@ export class AircraftComponent implements OnInit {
       startWith({dataState: DataStateEnum.LOADING}),
       catchError(err => of({dataState: DataStateEnum.ERROR, errorMessage: err.message}))
     );
-  //   // this.aircraftService.getDesignedAircrafts().subscribe({
-  //   //   next: (data) => this.aircraftsList = data,
-  //   //   error: (err) => this.error = err.message,
-  //   //   complete: () => this.error = null
-  //   // })
   }
 
   getDevelopmentAircrafts() {
@@ -60,11 +71,15 @@ export class AircraftComponent implements OnInit {
       startWith({ dataState: DataStateEnum.LOADING }),
       catchError(err => of({ dataState: DataStateEnum.ERROR, errorMessage: err.message }))
     );
-  //   this.aircraftService.getDeveloppementAircrafts().subscribe({
-  //     next: (data) => this.aircraftsList = data,
-  //     error: (err) => this.error = err.message,
-  //     complete: () => this.error = null
-  //   })
+  }
+
+  searchAircraftsByKeyword(payload: any) {
+    this.aircrafts$ = this.aircraftService.getAircrafts().pipe(
+      map((data: Aircraft[]) => data.filter(aircraft => aircraft.prog.includes(payload))),
+      map(filteredData => ({dataState: DataStateEnum.LOADED, data: filteredData})),
+      startWith({dataState: DataStateEnum.LOADED}),
+      catchError(err => of({dataState: DataStateEnum.ERROR, errorMessage: err.message}))
+    );
   }
 }
 
