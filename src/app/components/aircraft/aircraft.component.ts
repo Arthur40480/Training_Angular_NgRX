@@ -23,14 +23,14 @@ export class AircraftComponent implements OnInit {
   }
 
   onActionEvent($event: any) {
-    if($event == "ALL_AIRCRAFTS") this.getAllAircrafts;
-    if($event == "ALL_AIRCRAFTS_DESIGNED") this.getDesignedAircrafts;
-    if($event == "ALL_AIRCRAFTS_DEVELOPED") this.getDevelopmentAircrafts;
+    if($event == "ALL_AIRCRAFTS") this.getAllAircrafts();
+    if($event == "ALL_AIRCRAFTS_DESIGNED") this.getDesignedAircrafts();
+    if($event == "ALL_AIRCRAFTS_DEVELOPED") this.getDevelopmentAircrafts();
   }
 
   getAllAircrafts() {
     this.aircrafts$ = this.aircraftService.getAircrafts().pipe(
-      map((data: Aircraft[]) => ({dataState: DataStateEnum.LOADING, data: data})),
+      map((data: Aircraft[]) => ({dataState: DataStateEnum.LOADED, data: data})),
       startWith({dataState: DataStateEnum.LOADED}),
       catchError(err => of({dataState: DataStateEnum.ERROR, errorMessage: err.message}))
     );
@@ -43,8 +43,8 @@ export class AircraftComponent implements OnInit {
 
   getDesignedAircrafts() {
     this.aircrafts$ = this.aircraftService.getDesignedAircrafts().pipe(
-      map((data: Aircraft[]) => ({dataState: DataStateEnum.LOADING, data: data})),
-      startWith({dataState: DataStateEnum.LOADED}),
+      map((data: Aircraft[]) => ({dataState: DataStateEnum.LOADED, data: data})),
+      startWith({dataState: DataStateEnum.LOADING}),
       catchError(err => of({dataState: DataStateEnum.ERROR, errorMessage: err.message}))
     );
   //   // this.aircraftService.getDesignedAircrafts().subscribe({
@@ -56,8 +56,8 @@ export class AircraftComponent implements OnInit {
 
   getDevelopmentAircrafts() {
     this.aircrafts$ = this.aircraftService.getDeveloppementAircrafts().pipe(
-      map((data: Aircraft[]) => ({ dataState: DataStateEnum.LOADING, data: data })),
-      startWith({ dataState: DataStateEnum.LOADED }),
+      map((data: Aircraft[]) => ({ dataState: DataStateEnum.LOADED, data: data })),
+      startWith({ dataState: DataStateEnum.LOADING }),
       catchError(err => of({ dataState: DataStateEnum.ERROR, errorMessage: err.message }))
     );
   //   this.aircraftService.getDeveloppementAircrafts().subscribe({
