@@ -52,7 +52,7 @@ export class AircraftComponent implements OnInit {
   getAllAircrafts() {
     this.aircrafts$ = this.aircraftService.getAircrafts().pipe(
       map((data: Aircraft[]) => ({dataState: DataStateEnum.LOADED, data: data})),
-      startWith({dataState: DataStateEnum.LOADED}),
+      startWith({dataState: DataStateEnum.LOADING}),
       catchError(err => of({dataState: DataStateEnum.ERROR, errorMessage: err.message}))
     );
   }
@@ -74,10 +74,9 @@ export class AircraftComponent implements OnInit {
   }
 
   searchAircraftsByKeyword(payload: any) {
-    this.aircrafts$ = this.aircraftService.getAircrafts().pipe(
-      map((data: Aircraft[]) => data.filter(aircraft => aircraft.prog.includes(payload))),
-      map(filteredData => ({dataState: DataStateEnum.LOADED, data: filteredData})),
-      startWith({dataState: DataStateEnum.LOADED}),
+    this.aircrafts$ = this.aircraftService.getAircraftByKeyword(payload).pipe(
+      map((data: Aircraft[]) => ({dataState: DataStateEnum.LOADED, data: data})),
+      startWith({dataState: DataStateEnum.LOADING}),
       catchError(err => of({dataState: DataStateEnum.ERROR, errorMessage: err.message}))
     );
   }
