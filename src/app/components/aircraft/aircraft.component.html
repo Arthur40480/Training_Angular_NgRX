@@ -1,23 +1,23 @@
 <div>
-    <app-aircrafts-navbar (eventEmitter)="onActionEvent($event)"></app-aircrafts-navbar>
+    <app-aircrafts-navbar></app-aircrafts-navbar>
     
-    <ng-container *ngIf="aircrafts$ | async as result" [ngSwitch]="result.dataState">
+    <ng-container *ngIf="aircraftsState$ | async as state" [ngSwitch]="state.dataState">
 
-        <ng-container *ngSwitchCase="dataStateEnum.LOADING">
+        <ng-container *ngSwitchCase="aircraftsStateEnum.LOADING">
             <div class="p-2">Loading</div>
         </ng-container>
-        <ng-container *ngSwitchCase="dataStateEnum.LOADED">
+        <ng-container *ngSwitchCase="aircraftsStateEnum.LOADED">
             <div class="p-2">Loaded</div>
         </ng-container>
-        <ng-container *ngSwitchCase="dataStateEnum.ERROR">
-            <div class="p-2">{{result.errorMessage}}</div>
+        <ng-container *ngSwitchCase="aircraftsStateEnum.ERROR">
+            <div class="p-2">{{state.errorMessage}}</div>
         </ng-container>
 
         <table class="table table-striped">
             <tr>
                 <th>Id</th> <th>Program</th> <th>Design</th> <th>Development</th>
             </tr>
-            <tr *ngFor="let aircraft of result.data">
+            <tr *ngFor="let aircraft of state.aircrafts">
                 <td>{{aircraft.id}}</td>
                 <td>{{aircraft.prog}}</td>
                 <td>{{aircraft.design}}</td>
