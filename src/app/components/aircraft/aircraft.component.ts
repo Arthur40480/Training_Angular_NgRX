@@ -7,6 +7,7 @@ import { DataStateEnum } from 'src/app/state/aircraft.state';
 import { of } from 'rxjs';
 import { Laboratory } from 'src/app/laboratory';
 import { ActionEvent, AircraftsActionsTypes } from 'src/app/actions/aircraft.actions';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-aircraft',
@@ -18,14 +19,13 @@ export class AircraftComponent implements OnInit {
   // aircraftsList : Aircraft[] | null = null; OPTION 1 -> tableau d'avions
   aircrafts$: Observable<AppDataState<Aircraft[]>> | null = null;
   readonly dataStateEnum = DataStateEnum;
-  laboratory: Laboratory;
 
-  constructor(private aircraftService: AircraftService) {
-    this.laboratory = new Laboratory();
-  }
+  constructor(private aircraftService: AircraftService, private eventService: EventService) {}
 
   ngOnInit(): void {
-    this.laboratory.tests();
+    this.eventService.eventSubjectObservable.subscribe((actionEvent: ActionEvent) => {
+      this.onActionEvent(actionEvent);
+    })
   }
 
   onActionEvent($actionEvent: ActionEvent) {
@@ -81,7 +81,3 @@ export class AircraftComponent implements OnInit {
     );
   }
 }
-
-
-
-

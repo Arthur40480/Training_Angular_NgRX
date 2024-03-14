@@ -29,20 +29,6 @@
       "prog": "A330",
       "design": true,
       "development": true
-    },
-    {
-      "name": "Javascript",
-      "description": "Super formation",
-      "price": 5000,
-      "quantity": 1,
-      "id": 6
-    },
-    {
-      "name": "Javascript",
-      "description": "Super formation",
-      "price": 5000,
-      "quantity": 1,
-      "id": 7
     }
   ]
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { AircraftsActionsTypes } from 'src/app/actions/aircraft.actions';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-aircrafts-navbar',
@@ -11,25 +12,24 @@ export class AircraftsNavbarComponent implements OnInit {
   value: string = "";
 
   @Output() eventEmitter: EventEmitter<any> = new EventEmitter();
-  constructor() { }
+  constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
   }
 
   getAllAircrafts() {
-    this.eventEmitter.emit({type: AircraftsActionsTypes.GET_ALL_AIRCRAFTS, payload: null})
+    this.eventService.publishEvent({type: AircraftsActionsTypes.GET_ALL_AIRCRAFTS, payload: null})
   }
 
   getDesignedAircrafts() {
-    this.eventEmitter.emit({type: AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS, payload: null});
+    this.eventService.publishEvent({type: AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS, payload: null});
   }
 
   getDevelopmentAircrafts() {
-    this.eventEmitter.emit({type: AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS, payload: null});
+    this.eventService.publishEvent({type: AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS, payload: null});
   }
 
   onSearch(value: string) {
-    this.eventEmitter.emit({type: AircraftsActionsTypes.GET_SEARCH_AIRCRAFTS, payload: value})
-    console.log("Valeur entrante: " + value)
+    this.eventService.publishEvent({type: AircraftsActionsTypes.GET_SEARCH_AIRCRAFTS, payload: value});
   }
 }
