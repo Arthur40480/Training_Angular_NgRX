@@ -1,7 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AircraftsActionsTypes, GetAllAircraftsAction } from 'src/app/ngrx/aircrafts.actions';
+import { AircraftsActionsTypes, GetAllAircraftsAction, GetDesignedAircraftsAction } from 'src/app/ngrx/aircrafts.actions';
 import { EventService } from 'src/app/services/event.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class AircraftsNavbarComponent implements OnInit {
   }
 
   getDesignedAircrafts() {
-    // this.eventService.publishEvent({type: AircraftsActionsTypes.GET_DESIGNED_AIRCRAFTS, payload: null});
+    this.store.dispatch(new GetDesignedAircraftsAction({}))
   }
 
   getDevelopmentAircrafts() {
