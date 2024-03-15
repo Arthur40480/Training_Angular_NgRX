@@ -25,4 +25,7 @@
             </tr>
         </table>
     </ng-container>
+    <ng-container *ngIf="countAlertAircrafts$ | async as countAlertAircrafts">
+        <h6 class="text-danger">Total aircrafts under design & dev : {{countAlertAircrafts}}</h6>
+    </ng-container>
 </div>
