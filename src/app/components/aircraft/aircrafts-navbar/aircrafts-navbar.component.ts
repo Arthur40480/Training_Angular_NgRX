@@ -1,8 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AircraftsActionsTypes, GetAllAircraftsAction, GetDesignedAircraftsAction } from 'src/app/ngrx/aircrafts.actions';
-import { EventService } from 'src/app/services/event.service';
+import { GetAllAircraftsAction, GetDesignedAircraftsAction, GetDevelopmentAircraftsAction, GetSearchAircraftsAction } from 'src/app/ngrx/aircrafts.actions';
 
 @Component({
   selector: 'app-aircrafts-navbar',
@@ -23,14 +22,14 @@ export class AircraftsNavbarComponent implements OnInit {
   }
 
   getDesignedAircrafts() {
-    this.store.dispatch(new GetDesignedAircraftsAction({}))
+    this.store.dispatch(new GetDesignedAircraftsAction({}));
   }
 
   getDevelopmentAircrafts() {
-    // this.eventService.publishEvent({type: AircraftsActionsTypes.GET_DEVELOPMENT_AIRCRAFTS, payload: null});
+    this.store.dispatch(new GetDevelopmentAircraftsAction({}));
   }
 
   onSearch(value: string) {
-    // this.eventService.publishEvent({type: AircraftsActionsTypes.GET_SEARCH_AIRCRAFTS, payload: value});
+    this.store.dispatch(new GetSearchAircraftsAction(value))
   }
 }
