@@ -30,5 +30,20 @@
       "design": true,
       "development": true
     }
+  ],
+
+  "entities": [
+    {
+      "id": 1,
+      "name": "po"
+    },
+    {
+      "id": 2,
+      "name": "jo"
+    },
+    {
+      "id": 3,
+      "name": "mo"
+    }
   ]
 }

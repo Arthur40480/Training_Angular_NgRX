@@ -16,7 +16,7 @@ import { AircraftsEffects } from './ngrx/aircrafts.effects';
   declarations: [
     AppComponent,
     AircraftComponent,
-    AircraftsNavbarComponent
+    AircraftsNavbarComponent,
   ],
   imports: [
     BrowserModule,
