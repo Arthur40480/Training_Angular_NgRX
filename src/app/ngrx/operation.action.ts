@@ -28,7 +28,7 @@ export class AddOperationActionError implements Action {
 
 export class RemoveOperactionAction implements Action {
     type: OperationActionsTypes = OperationActionsTypes.REMOVE_OPERATION;
-    constructor(public payload: Operation) {}
+    constructor(public payload: number) {}
 }
 
 export class RemoveOperactionActionSuccess implements Action {
@@ -40,3 +40,6 @@ export class RemoveOperactionActionError implements Action {
     type: OperationActionsTypes = OperationActionsTypes.REMOVE_OPERATION_ERROR;
     constructor(public payload: string) {}
 }
+
+export type OperationActions = AddOperationAction | AddOperationActionSuccess | AddOperationActionError |
+RemoveOperactionAction | RemoveOperactionActionSuccess | RemoveOperactionActionError
