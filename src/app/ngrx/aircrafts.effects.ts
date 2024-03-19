@@ -1,14 +1,35 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { AircraftService } from "../services/aircraft.service";
+import { AuthenticateService } from "../services/authenticate.service";
 import { Injectable } from "@angular/core";
 import { AircraftsActionsTypes, GetAllAircraftsActionError, GetAllAircraftsActionSuccess, GetDesignedAircraftsActionError, GetDesignedAircraftsActionSuccess, GetDevelopmentAircraftsActionError, GetDevelopmentAircraftsActionSuccess, GetSearchAircraftsAction, GetSearchAircraftsActionError, GetSearchAircraftsActionSuccess } from "./aircrafts.actions";
-import { Observable, catchError, map, mergeMap, of } from "rxjs";
+import { Observable, catchError, map, mergeMap, of, tap } from "rxjs";
 import { Action } from "@ngrx/store";
+import { AuthenticateActionsTypes, LoginAction, LoginActionError, LoginActionSuccess } from "./authenticate.action";
 
 @Injectable ()
 export class AircraftsEffects {
-    constructor(private aircraftService: AircraftService, private effectActions: Actions) {}
+    constructor(private aircraftService: AircraftService, private authenticateService: AuthenticateService, private effectActions: Actions) {}
+    
+    getUserEffect : Observable<Action> = createEffect(
+        () =>this.effectActions.pipe(
+            ofType(AuthenticateActionsTypes.LOGING),
+            mergeMap((action : LoginAction) => {
+                return this.authenticateService.getUser(action.payload).pipe(
+                    map((user) => {
+                        if(Array.isArray(user) && user.length === 0) {
+                            return new LoginActionError("Password ou email invalide")
+                        }else {
+                            return new LoginActionSuccess(user)
+                        }
+                    }),
+                    catchError((err) => of(new LoginActionError(err.message)))
+                )
+            })
 
+        )
+    )
+    
     getAllAircraftsEffect: Observable<Action> = createEffect(
         () => this.effectActions.pipe(
             ofType(AircraftsActionsTypes.GET_ALL_AIRCRAFTS), 

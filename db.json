@@ -31,7 +31,18 @@
       "development": true
     }
   ],
-
+  "users": [
+    {
+      "id": 1,
+      "email": "arthur@free.fr",
+      "password": "1234"
+    },
+    {
+      "id": 2,
+      "email": "ambre@free.fr",
+      "password": "1234"
+    }
+  ],
   "entities": [
     {
       "id": 1,

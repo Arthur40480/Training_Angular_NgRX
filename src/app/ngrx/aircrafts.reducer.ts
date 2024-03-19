@@ -31,7 +31,7 @@ export function AircraftsReducer(state: AircraftsState = initialState, action: A
 
         case AuthenticateActionsTypes.LOGING_ERROR:
             console.log("ERREUR: connexion impossible !");
-            return{...state, dataState: AircraftsStateEnum.ERROR, errorMessage:(<AircraftsActions> action).payload};
+            return{...state, dataState: AircraftsStateEnum.ERROR, isLogin:false, errorMessage:(<AircraftsActions> action).payload};
 
         case AuthenticateActionsTypes.LOGOUT:
             console.log("Déconnexion...");

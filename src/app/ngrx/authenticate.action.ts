@@ -17,12 +17,12 @@ export enum AuthenticateActionsTypes {
 
 export class LoginAction implements Action {
     type: AuthenticateActionsTypes = AuthenticateActionsTypes.LOGING;
-    constructor(public payload: User) {}
+    constructor(public payload: any) {}
 }
 
 export class LoginActionSuccess implements Action {
     type: AuthenticateActionsTypes = AuthenticateActionsTypes.LOGING_SUCCESS;
-    constructor(public payload: any) {}
+    constructor(public payload: User) {}
 }
 
 export class LoginActionError implements Action {
