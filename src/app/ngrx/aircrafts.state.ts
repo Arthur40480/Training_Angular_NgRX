@@ -12,13 +12,15 @@ export enum AircraftsStateEnum {
 export interface AircraftsState extends EntityState<Operation>{
     aircrafts: Aircraft[],
     errorMessage: string,
-    dataState: AircraftsStateEnum
+    dataState: AircraftsStateEnum,
+    isLogin: boolean
 }
 
 export const initState: AircraftsState = {
     aircrafts: [],
     errorMessage: "",
     dataState: AircraftsStateEnum.INITIAL,
+    isLogin: false,
     ids: [],
     entities: {}
 }
