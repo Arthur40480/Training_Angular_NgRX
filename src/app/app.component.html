@@ -10,7 +10,12 @@
       <a class="nav-link" href="#">Programs</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/login">Connexion</a>
+      <ng-container *ngIf="isLogin$ | async; else notLoggedIn">
+        <button class="nav-link btn" (click)="logout()">Déconnexion</button>
+      </ng-container>
+      <ng-template #notLoggedIn>
+        <a class="nav-link" href="/login">Connexion</a>
+      </ng-template>
     </li>
   </ul>
 </nav>

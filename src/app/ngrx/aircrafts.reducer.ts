@@ -36,6 +36,7 @@ export function AircraftsReducer(state: AircraftsState = initialState, action: A
         case AuthenticateActionsTypes.LOGOUT:
             console.log("Déconnexion...");
             return{...state, dataState: AircraftsStateEnum.LOADING};
+            
         case AuthenticateActionsTypes.LOGOUT_SUCCESS:
             console.log("Utilisateur déconnecter !");
             return{...state, dataState: AircraftsStateEnum.LOADED, isLogin: false};
